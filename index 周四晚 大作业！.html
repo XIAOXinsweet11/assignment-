@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>北京旅游攻略</title>
+<meta charset="UTF-8">
+<title>北京旅游攻略</title>
+</footer>
+
+
+<style>
+      .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        .image-container .image-text {
+            position: absolute;
+            top: -500px;
+            left: 300px;
+            right: 200;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: rgb(255, 67, 67);
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+        .image-container .image-text span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+</style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="https://media.istockphoto.com/id/137498822/zh/%E7%85%A7%E7%89%87/tiananmen.jpg?s=1024x1024&w=is&k=20&c=i0fgScE4Ne1no0eaKsMzrhS5iCheC54C_pWF4OBLobQ=" alt="北京旅游推荐">
+        <div class="image-text">
+            肖欣带你玩中国<br>
+            北京旅游推荐集
+        </div>
+    </div>
+</body>
+
+<style>
+    .lottery-button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ff9800;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .result-container {
+      margin-top: 20px;
+      font-size: 24px;
+      color: #ff9800;
+    }
+    
+    /* 模态框样式 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 300px;
+      text-align: center;
+    }
+  </style>
+  
+  <h2 style="color: red;">如果看完之后，您选择跟我一起游北京，请填写一下信息，工作人员会在24小时内为您确认</h2>
+  <h2 style="color: red;">如果看完之后，您选择跟我一起游北京，请填写一下信息，工作人员会在24小时内为您确认</h2>
+  <h2 style="color: red;">如果看完之后，您选择跟我一起游北京，请填写一下信息，工作人员会在24小时内为您确认</h2>
+
+<form action="/submit-tourist-info" method="post">
+  <label for="name">姓名：</label>
+  <input type="text" id="name" name="name" required><br><br>
+  <label for="phone">电话：</label>
+  <input type="tel" id="phone" name="phone" required><br><br>
+  <label for="country">国家：</label>
+  <input type="text" id="country" name="country" required><br><br>
+  <label for="insurance">是否购买保险：</label>
+  <input type="checkbox" id="insurance" name="insurance"><br><br>
+  <label for="passport">是否办理好护照与签证：</label>
+  <input type="checkbox" id="passport" name="passport"><br><br>
+  <label for="deposit">是否缴纳了押金：</label>
+  <input type="checkbox" id="deposit" name="deposit"><br><br>
+  <input type="submit" value="提交">
+</form>
+
+
+  <p style="color: rgb(93, 61, 251);">去年报名过“肖欣——香港旅游团”的朋友可以参与幸运大抽奖，系统自动记录您的第一次抽奖结果，以此为准，派发对应的奖品，最终解释权归肖欣所有。</p>
+  <p style="color: rgb(93, 61, 251);">去年报名过”肖欣——香港旅游团“的朋友可以参与幸运大抽奖，系统自动记录您的第一次抽奖结果，以此为准，派发对应的奖品，最终解释权归肖欣所有。</p>
+  <p style="color: rgb(93, 61, 251);">去年报名过“肖欣——香港旅游团”的朋友可以参与幸运大抽奖，系统自动记录您的第一次抽奖结果，以此为准，派发对应的奖品，最终解释权归肖欣所有。</p>
+ 
+<button class="lottery-button" onclick="startLottery()" id="lotteryButton">开始抽奖</button>
+
+<p class="result-container" id="result"></p>
+
+<!-- 模态框 -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p>您已经参与过抽奖了！</p>
+    <button onclick="closeModal()">确定</button>
+  </div>
+</div>
+
+<script>
+  var isLotteryDone = false; // 标记用户是否已经抽奖
+  
+  function startLottery() {
+    if (isLotteryDone) {
+      openModal();
+      return;
+    }
+      
+      var prizes = ["Iphone 15 pro max 1TB", "北京烤鸭免单券", "天安门冰箱贴", "优惠券-1000人民币", "中国红包纪念品", "中国红旗一面", "中国红钢笔一支", "中国筷子一套"];
+      var randomIndex = Math.floor(Math.random() * prizes.length);
+      var prize = prizes[randomIndex];
+      var resultElement = document.getElementById("result");
+    resultElement.textContent = "恭喜您，抽中了：" + prize;
+    
+    isLotteryDone = true; // 将抽奖状态标记为已完成
+    document.getElementById("lotteryButton").disabled = true; // 禁用抽奖按钮
+  }
+  
+  function openModal() {
+    document.getElementById("modal").style.display = "block";
+  }
+  
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+</script>
+
+
+<body>
+    <h1>如果您准备好2天1晚的时间，那就让我们一起探索古老中国的首都城市——北京！<h1>
+    <h2 style="color: red;">1.第一站！就是您看到的这张图——中国北京天安门！</h2>
+    <h3>天安门是中国北京市的一座重要地标，具有丰富的历史背景和文化意义。位于北京市中心，是世界上最大的城市广场之一，也是中国传统建筑的代表之一，采用了明清宫殿建筑风格，屋顶是黄色琉璃瓦，象征着皇家的尊贵。天安门广场和天安门见证了中国许多重大的历史事件和政治活动。其中最著名的是1949年10月1日，中华人民共和国的开国大典在天安门广场上举行，毛泽东宣布中华人民共和国的成立。
+后来，天安门广场也成为了中国人民集会、庆典和纪念活动的重要场所。此外，天安门广场还吸引了大量国内外游客，成为游览和观光的热门景点，可以说这是必打卡的地点！<br><br><ber><p><span style="color: rgb(212, 212, 4);">你还愣着干什么？赶快拿起相机拍照呀!动作怎么摆呢？你可以像中国阿姨一样，摆中国游客经典姿势！！</span></p>
+    <img src="https://k.sinaimg.cn/n/sinakd20240212s/350/w640h510/20240212/9ead-a0b9a226a1d48e632e6899d5fe9597a9.png/w700d1q75cms.jpg?by=cms_fixed_width" alt="Example Selfie">
+<style>
+    .image-container {
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+      }
+      
+      .image-container img {
+        opacity: 0;
+        position: relative;
+        animation: revealImage 2s forwards;
+      }
+      
+      @keyframes revealImage {
+        0% {
+          opacity: 0;
+          transform: translateX(-100%);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+</style>
+    <h2 style="color: red;">2.第二站！就在天安门旁边！中国国家博物馆，看看中国的镇国之宝！</h2><br><p><span style="color: rgb(212, 212, 4);">你也可以像这位记录这一样，拍拍视频带回去给家人朋友观看哦！</span></p>
+<iframe width="640" height="350" src="https://www.youtube.com/embed/0FpryMxwBq8" frameborder="0" allowfullscreen></iframe>
+
+<p>
+    <span class="animated-text">温</span>
+    <span class="animated-text">馨</span>
+    <span class="animated-text">提</span>
+    <span class="animated-text">醒</span>
+    <span class="animated-text">：</span>
+    <span class="animated-text">博</span>
+    <span class="animated-text">物</span>
+    <span class="animated-text">馆</span>
+    <span class="animated-text">内</span>
+    <span class="animated-text">有</span>
+    <span class="animated-text">食</span>
+    <span class="animated-text">物</span>
+    <span class="animated-text">售</span>
+    <span class="animated-text">卖</span>
+    <span class="animated-text">，</span>
+    <span class="animated-text">请</span>
+    <span class="animated-text">准</span>
+    <span class="animated-text">备</span>
+    <span class="animated-text">现</span>
+    <span class="animated-text">金</span>
+    <span class="animated-text">以</span>
+    <span class="animated-text">便</span>
+    <span class="animated-text">购</span>
+    <span class="animated-text">买</span>
+    <span class="animated-text">简</span>
+    <span class="animated-text">单</span>
+    <span class="animated-text">的</span>
+    <span class="animated-text">食</span>
+    <span class="animated-text">物</span>
+    <span class="animated-text">。</span>
+    <span class="animated-text">参</span>
+    <span class="animated-text">观</span>
+    <span class="animated-text">结</span>
+    <span class="animated-text">束</span>
+    <span class="animated-text">后</span>
+    <span class="animated-text">，</span>
+    <span class="animated-text">您</span>
+    <span class="animated-text">还</span>
+    <span class="animated-text">可</span>
+    <span class="animated-text">以</span>
+    <span class="animated-text">品</span>
+    <span class="animated-text">尝</span>
+    <span class="animated-text">正</span>
+    <span class="animated-text">宗</span>
+    <span class="animated-text">北</span>
+    <span class="animated-text">京</span>
+    <span class="animated-text">烤</span>
+    <span class="animated-text">鸭</span>
+    <span class="animated-text">！</span>
+</p>
+
+<style>
+    .animated-text {
+        display: inline-block;
+        animation: colorAnimation 2s infinite;
+    }
+
+    @keyframes colorAnimation {
+        0% { color: rgb(93, 61, 251); }
+        25% { color: rgb(170, 0, 255); }
+        50% { color: rgb(0, 128, 255); }
+        75% { color: rgb(0, 255, 128); }
+        100% { color: rgb(255, 255, 0); }
+    }
+    <title>烤鸭店投票</title>
+    <style>
+        .restaurant-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .restaurant {
+            flex: 0 0 33.33%;
+            margin: 20px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .restaurant img {
+            width: 100%;
+            height: auto;
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+        }
+
+        #vote-result {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function vote(restaurant) {
+            var voteResult = document.getElementById("vote-result");
+            voteResult.innerHTML = "您选择的是：" + restaurant + "，请告知导游。";
+            voteResult.style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <h2 style="color: red;">第三站！我们为您提供了两家店可以选择，请您选择之后告知导游：</h2>
+    <div class="restaurant-container">
+        <div class="restaurant" onclick="vote('烤鸭店A')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLToYmc1wgo34Q5yCKYNapqr7xlDI_OP_jpw&usqp=CAU" alt="烤鸭店A">
+        <p>烤鸭店A:人均200，大众点评软件排行第一</p>
+    </div>
+    <div class="restaurant" onclick="vote('烤鸭店B')">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhh2rztC6BZytTf8sGg2g0W9w4rSSM0AvDQgI2Cy44ZA7-j5dJlRJJ2yI1DW7SEtj6p-A&usqp=CAU" alt="烤鸭店C">
+        <p>烤鸭店B：人均150，大众点评软件排行第三</p>
+    </div>
+    <title>烤鸭店与酒店</title>
+    <style>
+        .hotel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+            position: relative;
+        }
+
+        .hotel-image {
+            width: 400px;
+            height: 400px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: red;">第四站！吃完烤鸭后，找到导游肖欣，统一做大巴车去往酒店！</h2>
+    <div class="hotel-container">
+        <img class="hotel-image" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/d3/bf/67/exterior.jpg?w=1200&h=-1&s=1" alt="酒店图片">
+    </div>
+
+    <h1 style="color: red;">进入第二天！</h1>
+    <h2 style="color: red;">第一站！9点酒店楼下集合，一起上大巴车，我们前往紫禁城——故宫博物馆</h2>
+<h3>故宫博物馆位于中国北京市中心的故宫，是世界上最大、最完整的古代宫殿建筑群之一，也是中国最重要的文化遗产之一。建于明朝（公元1420年），作为明、清两代的皇家宫殿，曾是24位皇帝的宫殿和政治中心，延续了近500年的历史。
+   <br>故宫博物馆占地面积约为72万平方米，拥有超过9,000间房屋和大量珍贵文物。它被列为世界文化遗产，并被誉为“东方宫殿艺术的瑰宝”。</h3>
+   <img src="https://img95.699pic.com/photo/50076/2051.jpg_wh300.jpg" >
+</style>
+
+<p>
+    <span class="animated-text">温</span>
+    <span class="animated-text">馨</span>
+    <span class="animated-text">提</span>
+    <span class="animated-text">醒</span>
+    <span class="animated-text">：</span>
+    <span class="animated-text">博</span>
+    <span class="animated-text">物</span>
+    <span class="animated-text">馆</span>
+    <span class="animated-text">入</span>
+    <span class="animated-text">口</span>
+    <span class="animated-text">处</span>
+    <span class="animated-text">可</span>
+    <span class="animated-text">以</span>
+    <span class="animated-text">购</span>
+    <span class="animated-text">买</span>
+    <span class="animated-text">讲</span>
+    <span class="animated-text">解</span>
+    <span class="animated-text">器</span>
+    <span class="animated-text">，</span>
+    <span class="animated-text">2</span>
+    <span class="animated-text">0</span>
+    <span class="animated-text">元</span>
+    <span class="animated-text">1</span>
+    <span class="animated-text">个</span>
+    <span class="animated-text">！</span>
+    <span class="animated-text">在</span>
+    <span class="animated-text">我</span>
+    <span class="animated-text">这</span>
+    <span class="animated-text">里</span>
+    <span class="animated-text">购</span>
+    <span class="animated-text">买</span>
+    <span class="animated-text">只</span>
+    <span class="animated-text">要</span>
+    <span class="animated-text">1</span>
+    <span class="animated-text">0</span>
+    <span class="animated-text">元</span>
+    <span class="animated-text">。</span>
+    <span class="animated-text">同</span>
+    <span class="animated-text">时</span>
+    <span class="animated-text">我</span>
+    <span class="animated-text">也</span>
+    <span class="animated-text">会</span>
+    <span class="animated-text">为</span>
+    <span class="animated-text">大</span>
+    <span class="animated-text">家</span>
+    <span class="animated-text">深</span>
+    <span class="animated-text">度</span>
+    <span class="animated-text">讲</span>
+    <span class="animated-text">解</span>
+</p>
+
+<style>
+    .animated-text {
+        display: inline-block;
+        animation: colorAnimation 2s infinite;
+    }
+
+    @keyframes colorAnimation {
+        0% { color: rgb(93, 61, 251); }
+        25% { color: rgb(170, 0, 255); }
+        50% { color: rgb(0, 128, 255); }
+        75% { color: rgb(0, 255, 128); }
+        100% { color: rgb(255, 255, 0); }
+    }
+    
+</head>
+<body>
+     <h2 style="color: red;">第二站！9点酒店楼下集合，12点故宫博物馆出口集合，一起上大巴车，我们前往杂酱面馆</h2>
+     <img src="data:image/jpeg;base64,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" >
+
+<head>
+    <title>旅行行程</title>
+    <style>
+        .image-container {
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 400px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="color: red;">第二站！12点故宫博物馆出口集合，一起上大巴车，我们前往杂酱面馆。</h2>
+    <div class="image-container">
+        <img src="https://image1.pearvideo.com/cont/20210329/10800944-101125-1.png" alt="杂酱面馆图片">
+    </div>
+
+
+    <html>
+    <head>
+        <style>
+            .image-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+    
+            .image-container img {
+                width: 400px;
+                height: auto;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h2 style="color: red;">第三站！15点杂酱面馆出口集合，一起上大巴车，我们前往北京大学和清华大学</h2>
+        <div class="image-container">
+            <img src="https://studyinchina.hk/wp-content/uploads/2015/08/1%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%B8%E6%A0%A1%E6%A8%99-2.png" alt="北京大学图片">
+            <img src="https://studyinchina.hk/wp-content/uploads/2015/08/2%E6%B8%85%E5%8D%8E%E5%A4%A7%E5%AD%A6%E6%A0%A1%E5%BE%BD.jpg" alt="清华大学图片">
+        </div>
+
+
+        
+    <html>
+        <head>
+            <style>
+                .image-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-bottom: 20px;
+                }
+        
+                .image-container img {
+                    width: 400px;
+                    height: auto;
+                    margin: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <h2 style="color: red;">参观结束！旅程结束！本次短程旅游大家是否满意呢？</h2>
+            <h2 style="color: rgb(14, 244, 148);">请大家给导游肖欣打个分</h2>
+           
+
+            <!DOCTYPE html>
+<html>
+<head>
+    <title>打分</title>
+    <style>
+        .rating-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .star {
+            display: inline-block;
+            font-size: 30px;
+            color: gold;
+        }
+
+        .star:hover {
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function rateStars(stars) {
+            alert("感谢您的打分！您给了" + stars + "颗星星。祝您回家的旅途一路顺风，期待下次再见！");
+        }
+    </script>
+</head>
+<body>
+    <h1>旅行评分</h1>
+    <div class="rating-container">
+        <span class="star" onclick="rateStars(1)">★</span>
+        <span class="star" onclick="rateStars(2)">★</span>
+        <span class="star" onclick="rateStars(3)">★</span>
+        <span class="star" onclick="rateStars(4)">★</span>
+        <span class="star" onclick="rateStars(5)">★</span>
+    </div>
+</body>
+</html>
+
+
+
+
+    </body>
+    </html>
+
+
+
+</body>
+</html>
+
+
+</div>
+</body>
+</html>
